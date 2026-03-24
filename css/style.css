@@ -1,0 +1,1071 @@
+/* ============================================================
+   STYLE.CSS — Sito vetrina Dr. Fabio Rastelli, Geologo
+
+   INDICE:
+   1.  Variabili CSS
+   2.  Reset e base
+   3.  Tipografia
+   4.  Utilità (container, eyebrow, bottoni)
+   5.  Navbar / Header
+   6.  Hero
+   7.  Sezioni (intestazioni comuni)
+   8.  Servizi — cards
+   9.  Studio / Chi sono
+   10. Curriculum — timeline
+   11. Contatti
+   12. Footer
+   13. Responsive — tablet (max 900px)
+   14. Responsive — mobile (max 600px)
+============================================================ */
+
+
+/* ============================================================
+   1. VARIABILI CSS
+   Per cambiare colori, spaziature o stili modifica solo qui.
+============================================================ */
+:root {
+
+  /* --- Colori principali --- */
+  --blu:          #1B3A5C;   /* blu scuro professionale */
+  --blu-accento:  #2E6DA4;   /* blu medio, link e bottoni */
+  --blu-chiaro:   #E8F1F9;   /* sfondo tenue su elementi blu */
+  --verde:        #7A8C6E;   /* accento naturale, geologico */
+  --verde-chiaro: #EEF1EC;   /* sfondo tenue su elementi verdi */
+
+  /* --- Neutri --- */
+  --bianco:       #FFFFFF;
+  --grigio-bg:    #F5F7FA;   /* sfondo sezioni alternate */
+  --grigio-testo: #4A5568;   /* testo principale */
+  --grigio-medio: #718096;   /* testo secondario, didascalie */
+  --grigio-bordo: #E2E8F0;   /* bordi, separatori */
+  --nero-titoli:  #1A202C;   /* titoli principali */
+
+  /* --- Tipografia --- */
+  --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  /* Nota: se vuoi Google Fonts aggiungi in index.html il link
+     a Inter o altra famiglia e cambia questo valore */
+
+  /* --- Spaziature --- */
+  --spazio-xs:  0.5rem;
+  --spazio-sm:  1rem;
+  --spazio-md:  1.5rem;
+  --spazio-lg:  2.5rem;
+  --spazio-xl:  4rem;
+  --spazio-2xl: 6rem;
+
+  /* --- Contenitore max width --- */
+  --max-w: 1140px;
+  --padding-x: 1.5rem;   /* padding laterale del container */
+
+  /* --- Bordi arrotondati --- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 100px;
+
+  /* --- Ombre --- */
+  --ombra-card:  0 2px 12px rgba(0,0,0,0.07);
+  --ombra-hover: 0 6px 24px rgba(0,0,0,0.12);
+  --ombra-nav:   0 2px 16px rgba(0,0,0,0.10);
+
+  /* --- Transizioni --- */
+  --trans: 0.22s ease;
+
+  /* --- Altezza navbar fissa --- */
+  --h-nav: 68px;
+}
+
+
+/* ============================================================
+   2. RESET E BASE
+   Azzera i margini predefiniti del browser e imposta le basi.
+============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  /* Compensa la navbar fissa quando si salta a un'ancora */
+  scroll-padding-top: calc(var(--h-nav) + 1rem);
+}
+
+body {
+  font-family: var(--font);
+  color: var(--grigio-testo);
+  background-color: var(--bianco);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+ul { list-style: none; }
+
+a {
+  color: var(--blu-accento);
+  text-decoration: none;
+  transition: color var(--trans);
+}
+a:hover { color: var(--blu); }
+
+
+/* ============================================================
+   3. TIPOGRAFIA
+   Gerarchia visiva chiara: titoli scuri, testi grigi.
+============================================================ */
+h1, h2, h3, h4 {
+  color: var(--nero-titoli);
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+h1 { font-size: clamp(1.75rem, 4vw, 2.75rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); }
+h3 { font-size: 1.15rem; }
+h4 { font-size: 0.95rem; }
+
+p { margin-bottom: 0; }  /* gestiamo i gap con il layout */
+
+
+/* ============================================================
+   4. UTILITÀ
+   Pezzi riutilizzabili: container, eyebrow, bottoni, placeholder.
+============================================================ */
+
+/* --- Contenitore centrato --- */
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--padding-x);
+}
+
+/* --- Eyebrow: etichetta piccola sopra i titoli --- */
+.eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--verde);
+  margin-bottom: 0.6rem;
+}
+
+/* --- Bottoni --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: background-color var(--trans), color var(--trans),
+              border-color var(--trans), transform var(--trans),
+              box-shadow var(--trans);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Bottone primario: pieno blu accento */
+.btn-primary {
+  background-color: var(--blu-accento);
+  color: var(--bianco);
+  border-color: var(--blu-accento);
+}
+.btn-primary:hover {
+  background-color: var(--blu);
+  border-color: var(--blu);
+  color: var(--bianco);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(46,109,164,0.30);
+}
+
+/* Bottone secondario: contorno su sfondo scuro (hero) */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--bianco);
+  border-color: rgba(255,255,255,0.55);
+}
+.btn-secondary:hover {
+  background-color: rgba(255,255,255,0.12);
+  border-color: var(--bianco);
+  color: var(--bianco);
+}
+
+/* --- Placeholder immagini: blocchi grigi descrittivi --- */
+/* Sostituisci questi div con tag <img> reali quando disponibili */
+.image-placeholder {
+  background-color: var(--grigio-bordo);
+  border: 2px dashed var(--grigio-medio);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--spazio-md);
+  color: var(--grigio-medio);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+.image-placeholder-large {
+  width: 100%;
+  min-height: 340px;
+  border-radius: var(--radius-lg);
+}
+.image-placeholder-profile {
+  width: 260px;
+  height: 300px;
+  border-radius: var(--radius-lg);
+}
+
+/* --- Link testuale semplice --- */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--blu-accento);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color var(--trans);
+}
+.text-link:hover { text-decoration-color: var(--blu-accento); }
+
+/* --- Nota testuale discreta --- */
+.note-text {
+  font-size: 0.8rem;
+  color: var(--grigio-medio);
+  font-style: italic;
+  margin-top: var(--spazio-sm);
+  padding: 0.6rem var(--spazio-sm);
+  border-left: 3px solid var(--grigio-bordo);
+  background-color: var(--grigio-bg);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+
+/* ============================================================
+   5. NAVBAR / HEADER
+   Fissa in alto, semi-trasparente, diventa solida allo scroll.
+   La classe .scrolled viene aggiunta da JS.
+============================================================ */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--h-nav);
+  background-color: rgba(27, 58, 92, 0.97);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: box-shadow var(--trans);
+}
+
+/* Ombra aggiuntiva quando si scorre (gestita da JS) */
+.site-header.scrolled {
+  box-shadow: var(--ombra-nav);
+}
+
+.header-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spazio-md);
+}
+
+/* --- Logo --- */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+/* Quadratino colorato con le iniziali */
+.logo-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background-color: var(--verde);
+  color: var(--bianco);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--bianco);
+  line-height: 1.3;
+  max-width: 180px;
+}
+
+/* --- Link di navigazione --- */
+.main-nav ul {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.main-nav a {
+  display: block;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.78);
+  border-radius: var(--radius-sm);
+  transition: color var(--trans), background-color var(--trans);
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: var(--bianco);
+  background-color: rgba(255,255,255,0.10);
+}
+
+/* Ultimo link (Contatti) evidenziato come CTA */
+.main-nav li:last-child a {
+  background-color: var(--blu-accento);
+  color: var(--bianco);
+  padding-inline: 1rem;
+}
+.main-nav li:last-child a:hover {
+  background-color: #3a80be;
+}
+
+/* --- Pulsante hamburger (visibile solo su mobile) --- */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--bianco);
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
+  line-height: 1;
+  transition: background-color var(--trans);
+}
+.menu-toggle:hover {
+  background-color: rgba(255,255,255,0.10);
+}
+
+
+/* ============================================================
+   6. HERO
+   Sezione iniziale a piena larghezza con griglia testo + immagine.
+============================================================ */
+.hero {
+  background: linear-gradient(145deg, #0D2440 0%, var(--blu) 55%, #1E4D78 100%);
+  padding-top: calc(var(--h-nav) + var(--spazio-xl));
+  padding-bottom: var(--spazio-2xl);
+  /* Sottile pattern geometrico per dare profondità */
+  background-image:
+    linear-gradient(145deg, #0D2440 0%, var(--blu) 55%, #1E4D78 100%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 80px,
+      rgba(255,255,255,0.025) 80px,
+      rgba(255,255,255,0.025) 81px
+    );
+}
+
+/* Griglia hero: testo a sinistra, immagine a destra */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spazio-xl);
+  align-items: center;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-md);
+}
+
+/* Eyebrow nella hero: colore leggermente diverso su sfondo scuro */
+.hero .eyebrow {
+  color: var(--verde);
+  background-color: rgba(122,140,110,0.15);
+  border: 1px solid rgba(122,140,110,0.30);
+  border-radius: var(--radius-pill);
+  padding: 0.3rem 0.9rem;
+  width: fit-content;
+}
+
+.hero h1 {
+  color: var(--bianco);
+  font-size: clamp(1.65rem, 3.5vw, 2.5rem);
+  line-height: 1.2;
+}
+
+.hero-text {
+  color: rgba(255,255,255,0.72);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* Pulsanti CTA affiancati */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: var(--spazio-xs);
+}
+
+/* Elenco punti chiave sotto i CTA */
+.hero-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: var(--spazio-xs);
+  padding-top: var(--spazio-sm);
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+
+.hero-highlights li {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.60);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+/* Pallino decorativo davanti ad ogni voce */
+.hero-highlights li::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--verde);
+  flex-shrink: 0;
+}
+
+/* Immagine hero */
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero-visual .image-placeholder-large {
+  background-color: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.45);
+  min-height: 360px;
+}
+
+
+/* ============================================================
+   7. SEZIONI — intestazioni comuni
+   Usato in Servizi, Curriculum, Contatti.
+============================================================ */
+
+/* Padding uniforme per tutte le sezioni */
+.section {
+  padding-block: var(--spazio-2xl);
+}
+
+/* Sezioni con sfondo alternato grigio */
+.services-section,
+.timeline-section { background-color: var(--grigio-bg); }
+.about-section,
+.contact-section  { background-color: var(--bianco); }
+
+/* Intestazione centrata */
+.section-heading {
+  text-align: center;
+  max-width: 640px;
+  margin-inline: auto;
+  margin-bottom: var(--spazio-xl);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* Intestazione allineata a sinistra (usata nella sezione Studio) */
+.section-heading-left {
+  text-align: left;
+  margin-inline: 0;
+}
+
+.section-heading p,
+.section-heading-left p {
+  color: var(--grigio-medio);
+  font-size: 0.97rem;
+  line-height: 1.7;
+}
+
+
+/* ============================================================
+   8. SERVIZI — cards
+   Due gruppi (Geologia / Acustica) con titolo e griglia di card.
+============================================================ */
+
+/* Gruppo con titolo H3 e griglia */
+.services-group {
+  margin-bottom: var(--spazio-xl);
+}
+.services-group:last-child { margin-bottom: 0; }
+
+/* Titolo del gruppo */
+.services-group > h3 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--grigio-medio);
+  padding-bottom: 0.75rem;
+  margin-bottom: var(--spazio-md);
+  border-bottom: 1px solid var(--grigio-bordo);
+}
+
+/* Griglia auto-fill: da 1 a 3 colonne in base allo spazio */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.1rem;
+}
+
+/* Singola card servizio */
+.service-card {
+  background-color: var(--bianco);
+  border: 1px solid var(--grigio-bordo);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: transform var(--trans), box-shadow var(--trans), border-color var(--trans);
+}
+
+/* Hover: si solleva leggermente */
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--ombra-hover);
+  border-color: var(--blu-chiaro);
+}
+
+/* Icona emoji/testo nella card */
+.service-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--grigio-bg);
+  border-radius: var(--radius-sm);
+}
+
+.service-card h4 {
+  color: var(--nero-titoli);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.service-card p {
+  font-size: 0.85rem;
+  color: var(--grigio-medio);
+  line-height: 1.6;
+}
+
+/* Gruppo acustica: accento verde invece di blu */
+.services-section .services-group:last-child .service-card:hover {
+  border-color: var(--verde-chiaro);
+}
+.services-section .services-group:last-child .service-icon {
+  background-color: var(--verde-chiaro);
+}
+
+
+/* ============================================================
+   9. STUDIO / CHI SONO
+   Layout a due colonne: foto a sinistra, testo a destra.
+============================================================ */
+.about-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--spazio-xl);
+  align-items: start;
+}
+
+.about-visual {
+  display: flex;
+  justify-content: center;
+}
+
+/* Dettagli rapidi sotto il testo (3 box in riga) */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-md);
+}
+
+.about-content p {
+  color: var(--grigio-testo);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* Tre box con info sintetiche */
+.about-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spazio-sm);
+  margin-top: var(--spazio-xs);
+}
+
+.detail-box {
+  background-color: var(--grigio-bg);
+  border: 1px solid var(--grigio-bordo);
+  border-radius: var(--radius-md);
+  padding: var(--spazio-sm);
+}
+
+.detail-box strong {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--grigio-medio);
+  margin-bottom: 0.3rem;
+}
+
+.detail-box p {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--nero-titoli);
+  line-height: 1.4;
+}
+
+
+/* ============================================================
+   10. CURRICULUM — timeline verticale
+   Linea verticale a sinistra, card a destra per ogni voce.
+============================================================ */
+
+/* Contenitore timeline con linea verticale */
+.timeline {
+  position: relative;
+  max-width: 760px;
+  margin-inline: auto;
+  padding-left: 2rem;
+}
+
+/* La linea verticale è uno pseudo-elemento sul contenitore */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55rem;    /* allineata al primo pallino */
+  bottom: 0.55rem; /* si ferma all'ultimo pallino */
+  width: 2px;
+  background: linear-gradient(to bottom, var(--blu-accento), var(--grigio-bordo));
+}
+
+/* Singola voce */
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: var(--spazio-md);
+  margin-bottom: var(--spazio-lg);
+  align-items: start;
+}
+.timeline-item:last-child { margin-bottom: 0; }
+
+/* Pallino sulla linea */
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -0.42rem;         /* centrato sulla linea da 2px */
+  top: 0.55rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--blu-accento);
+  border: 3px solid var(--bianco);
+  box-shadow: 0 0 0 2px var(--blu-accento);
+  z-index: 1;
+}
+
+/* Anno / periodo: etichetta a sinistra */
+.timeline-year {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--blu-accento);
+  padding-top: 0.45rem;
+  line-height: 1.3;
+  text-align: right;
+  padding-right: var(--spazio-sm);
+}
+
+/* Card contenuto a destra */
+.timeline-content {
+  background-color: var(--bianco);
+  border: 1px solid var(--grigio-bordo);
+  border-radius: var(--radius-md);
+  padding: 1.25rem var(--spazio-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: var(--ombra-card);
+  transition: box-shadow var(--trans);
+}
+.timeline-content:hover {
+  box-shadow: var(--ombra-hover);
+}
+
+.timeline-content h3 {
+  font-size: 1rem;
+  color: var(--nero-titoli);
+}
+
+.timeline-content p {
+  font-size: 0.88rem;
+  color: var(--grigio-medio);
+  line-height: 1.65;
+}
+
+
+/* ============================================================
+   11. CONTATTI
+   Due colonne: info + mappa a sinistra, form a destra.
+============================================================ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spazio-xl);
+  align-items: start;
+}
+
+/* Colonna sinistra: card info e card mappa */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-md);
+}
+
+.contact-card {
+  background-color: var(--grigio-bg);
+  border: 1px solid var(--grigio-bordo);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spazio-sm);
+}
+
+.contact-card h3 {
+  font-size: 0.95rem;
+  color: var(--nero-titoli);
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--grigio-bordo);
+}
+
+.contact-card p {
+  font-size: 0.88rem;
+  color: var(--grigio-medio);
+  line-height: 1.6;
+}
+
+/* Elenco recapiti */
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.contact-list li {
+  font-size: 0.88rem;
+  color: var(--grigio-testo);
+  line-height: 1.5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.contact-list strong {
+  color: var(--nero-titoli);
+  font-weight: 600;
+  min-width: 90px;
+  flex-shrink: 0;
+}
+
+.contact-list a {
+  color: var(--blu-accento);
+  word-break: break-all;
+}
+.contact-list a:hover { color: var(--blu); }
+
+/* Colonna destra: form */
+.contact-form-wrapper {
+  background-color: var(--bianco);
+  border: 1px solid var(--grigio-bordo);
+  border-radius: var(--radius-lg);
+  padding: var(--spazio-lg);
+  box-shadow: var(--ombra-card);
+}
+
+/* Gruppo label + campo */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: var(--spazio-sm);
+}
+
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--grigio-testo);
+}
+
+/* Campi input e textarea */
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  background-color: var(--grigio-bg);
+  border: 1.5px solid var(--grigio-bordo);
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: 0.92rem;
+  color: var(--nero-titoli);
+  transition: border-color var(--trans), box-shadow var(--trans);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+/* Focus: bordo blu + alone leggero */
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--blu-accento);
+  box-shadow: 0 0 0 3px rgba(46,109,164,0.12);
+  background-color: var(--bianco);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+/* Bottone submit a piena larghezza */
+.contact-form .btn-primary {
+  width: 100%;
+  justify-content: center;
+  margin-top: var(--spazio-xs);
+}
+
+
+/* ============================================================
+   12. FOOTER
+   Sfondo blu scuro, tre colonne, riga copyright in basso.
+============================================================ */
+.site-footer {
+  background-color: var(--blu);
+  color: rgba(255,255,255,0.65);
+  padding-block: var(--spazio-xl) var(--spazio-lg);
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr;
+  gap: var(--spazio-xl);
+  padding-bottom: var(--spazio-lg);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.site-footer p { font-size: 0.88rem; line-height: 1.6; }
+
+.site-footer strong {
+  color: var(--bianco);
+  font-weight: 600;
+}
+
+.site-footer a {
+  color: rgba(255,255,255,0.65);
+  transition: color var(--trans);
+}
+.site-footer a:hover { color: var(--bianco); }
+
+/* Nota discreta nel footer */
+.footer-note {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  margin-top: 0.3rem;
+}
+
+
+/* ============================================================
+   13. RESPONSIVE — TABLET (max 900px)
+============================================================ */
+@media (max-width: 900px) {
+
+  /* Riduci spaziature generali */
+  :root {
+    --spazio-2xl: 4.5rem;
+    --spazio-xl:  3rem;
+  }
+
+  /* Hero: passa da 2 colonne a 1 */
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spazio-lg);
+    text-align: center;
+  }
+
+  .hero-content {
+    align-items: center;
+  }
+
+  .hero-highlights {
+    align-items: center;
+  }
+
+  /* Studio: passa da 2 colonne a 1, foto sopra */
+  .about-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .about-visual {
+    margin-inline: auto;
+  }
+
+  .about-details {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Contatti: passa da 2 colonne a 1 */
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Footer: 2 colonne */
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Timeline: riduci padding laterale */
+  .timeline {
+    padding-left: 1.5rem;
+  }
+}
+
+
+/* ============================================================
+   14. RESPONSIVE — MOBILE (max 600px)
+============================================================ */
+@media (max-width: 600px) {
+
+  :root {
+    --spazio-2xl: 3.5rem;
+    --spazio-xl:  2.5rem;
+    --spazio-lg:  2rem;
+    --padding-x:  1rem;
+  }
+
+  /* --- Navbar: mostra hamburger, nascondi nav links --- */
+  .menu-toggle {
+    display: block;
+  }
+
+  .main-nav {
+    /* Menu nascosto di default su mobile */
+    position: fixed;
+    top: var(--h-nav);
+    left: 0;
+    right: 0;
+    background-color: var(--blu);
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+    padding: var(--spazio-sm);
+    /* Transizione apertura/chiusura: gestita da JS aggiungendo .open */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.32s ease, padding var(--trans);
+    padding-block: 0;
+  }
+
+  /* Classe .open aggiunta da JS all'apertura del menu */
+  .main-nav.open {
+    max-height: 400px;
+    padding-block: var(--spazio-sm);
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    gap: 0.15rem;
+    align-items: stretch;
+  }
+
+  .main-nav a {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+
+  .main-nav li:last-child a {
+    margin-top: 0.35rem;
+    text-align: center;
+  }
+
+  /* --- Hero --- */
+  .hero-visual { display: none; } /* nasconde placeholder su mobile piccolo */
+  .hero h1     { font-size: 1.65rem; }
+
+  /* --- Cards servizi: 1 colonna --- */
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* --- Studio --- */
+  .about-details {
+    grid-template-columns: 1fr;
+  }
+
+  /* --- Timeline: layout a colonna invece di griglia --- */
+  .timeline-item {
+    grid-template-columns: 1fr;
+    padding-left: var(--spazio-sm);
+  }
+
+  .timeline-year {
+    text-align: left;
+    padding-right: 0;
+    padding-top: 0;
+  }
+
+  /* --- Footer: 1 colonna --- */
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: var(--spazio-md);
+  }
+}
